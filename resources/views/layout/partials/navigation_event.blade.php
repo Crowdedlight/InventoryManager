@@ -13,7 +13,7 @@
 
                 @if(Auth::check())
 
-                    <!-- <li><a href="">Events</a></li>-->
+                    <li><a href="{{ route('event.products') }}">Products</a></li>
                 @endif
             </ul>
 

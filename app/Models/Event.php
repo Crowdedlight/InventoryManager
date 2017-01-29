@@ -10,4 +10,9 @@ class Event extends Model
     {
         return $this->hasMany('App\Models\Storage', 'FK_eventID', 'id');
     }
+
+    public function products()
+    {
+        return $this->hasMany('App\Models\Product', 'FK_eventID', 'id');
+    }
 }

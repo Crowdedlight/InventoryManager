@@ -15,8 +15,8 @@ class CreateProductsStoragesTable extends Migration
     {
         Schema::create('products_storages', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('amount');
-            $table->integer('sold_amount');
+            $table->integer('amount')->default(0);
+            $table->integer('sold_amount')->default(0);
             $table->string('modifiedBy');
             $table->timestamps();
             $table->integer('FK_storageID')->unsigned();
