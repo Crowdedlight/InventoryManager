@@ -1,0 +1,24 @@
+/*.row:not(:last-child) {
+    border-bottom: 1px solid #ccc;
+}
+
+.col-md-6:not(:last-child) {
+    border-right: 1px solid #ccc;
+}
+*/
+
+#allowed_entities {
+    width: 435px;
+    overflow: auto;
+    height: 250px;
+}
+
+.sidebar-jumbotron {
+    padding-left: 38px !important;
+    padding-right: 38px !important;
+}
+
+.navbarPadding {
+    padding-left: 25px;
+    padding-right: 25px;
+}
