@@ -263,7 +263,7 @@ return [
         'Form'     => Collective\Html\FormFacade::class,
         'HTML'     => Collective\Html\HtmlFacade::class,
         'BootForm' => Watson\BootstrapForm\Facades\BootstrapForm::class,
-        'Debugbar' => Barryvdh\Debugbar\Facade::class,
+        'DebugBar' => Barryvdh\Debugbar\Facade::class,
 
     ],
 

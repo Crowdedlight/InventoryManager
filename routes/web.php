@@ -27,10 +27,14 @@ Route::group(['middleware' => ['web', 'auth']], function () {
     Route::post('/event/{id}/close', ['uses' => 'EventController@close', 'as' => 'event.close']);
     Route::post('/event/{id}/add', ['uses' => 'EventController@addStorage', 'as' => 'event.add_storage']);
     Route::get('/event/logout', ['uses' => 'EventController@logout', 'as' => 'event.logout']);
-    Route::post('/event/product/{id}/delete', ['uses' => 'ProductController@delete', 'as' => 'product.delete_product']);
 
     Route::get('/event/products', ['uses' => 'ProductController@index', 'as' => 'event.products']);
-    Route::post('/event/{eventID}/product/add', ['uses' => 'ProductController@addProduct', 'as' => 'product.add']);
+    Route::post('/event/{eventID}/product/add', ['uses' => 'ProductController@add', 'as' => 'product.add']);
+    Route::post('/event/product/{id}/delete', ['uses' => 'ProductController@delete', 'as' => 'products.delete_product']);
+
+    Route::get('/event/storages', ['uses' => 'StorageController@index', 'as' => 'event.storages']);
+    Route::post('/event/{eventID}/storage/add', ['uses' => 'StorageController@add', 'as' => 'storage.add']);
+    Route::post('/event/storage/{id}/delete', ['uses' => 'StorageController@delete', 'as' => 'storages.delete_storage']);
 
     Route::get('/auth/logout', ['uses' => 'AuthController@logout', 'as' => 'auth.logout']);
 });

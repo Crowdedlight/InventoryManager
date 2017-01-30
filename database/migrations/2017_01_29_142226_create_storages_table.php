@@ -16,6 +16,8 @@ class CreateStoragesTable extends Migration
         Schema::create('storages', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('createdBy');
+            $table->boolean('depot')->default(false);
             $table->integer('FK_eventID')->unsigned();
             $table->timestamps();
         });

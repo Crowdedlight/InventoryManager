@@ -14,6 +14,9 @@ class HomeController extends Controller
             return view('auth.login');
         }
 
+        if(Auth::user()->Event() != null)
+            return redirect()->route('event.overview');
+
         $events = Event::where('active', true)->get();
         view()->share('events', $events);
 

@@ -1,17 +1,17 @@
 <div class="modal-body">
     <div class="row">
         <div class="col-md-4">
-            <p>Name: <?php echo $product->name; ?></p>
+            <p>Name: <?php echo $storage->name; ?></p>
             <p>Last update:
-            <span data-toggle="tooltip" data-placement="top" title="<?=$product->updated_at ?>">
-            	<?= Carbon\Carbon::parse($product->updated_at)->diffForHumans() ?>
+            <span data-toggle="tooltip" data-placement="top" title="<?=$storage->updated_at ?>">
+            	<?= Carbon\Carbon::parse($storage->updated_at)->diffForHumans() ?>
             </span></p>
         </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
         <?php
-        echo BootForm::open(['route' => ['products.delete_product', 'id' => $product->id]]);
+        echo BootForm::open(['route' => ['storages.delete_storage', 'id' => $storage->id]]);
         echo BootForm::hidden('_action', 'delete_product');
         echo Button::submit()->danger()->withValue('Are you Sure?');
         echo BootForm::close();

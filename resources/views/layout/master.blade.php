@@ -18,10 +18,12 @@
 </head>
 <body>
 <div id="wrap">
-    @if (Auth::user()->FK_eventID != null)
-        @include('layout.partials.navigation_event')
-    @else
-        @include('layout.partials.navigation')
+    @if(Auth::check())
+        @if (Auth::user()->FK_eventID != null)
+            @include('layout.partials.navigation_event')
+        @else
+            @include('layout.partials.navigation')
+        @endif
     @endif
 
     <div class="container content">

@@ -5,20 +5,20 @@
     <div class="row">
         <div class="col-md-9">
             <div class="jumbotron">
-                <h1>Manage Products</h1>
+                <h1>Manage Storages</h1>
 
-                <?php echo BootForm::text('search_product', 'Search Product') ?>
-                <ul class="list-group" id="found_products">
+                <?php echo BootForm::text('search_storage', 'Search Storage') ?>
+                <ul class="list-group" id="found_storage">
                 </ul>
             </div>
         </div>
 
         <div class="col-md-3">
             <div class="jumbotron">
-                <?php echo Modal::named('addProduct')
-                        ->withTitle('Add Product')
-                        ->withButton(Button::info('Add Product')->block())
-                        ->withBody(view('modals.products_add_product')
+                <?php echo Modal::named('addStorage')
+                        ->withTitle('Add Storage')
+                        ->withButton(Button::info('Add Storage')->block())
+                        ->withBody(view('modals.storages_add_storage')
                                 ->with('eventID', Auth::user()->Event()->id)
                                 ->render())
                 ?>
@@ -28,7 +28,7 @@
 
     <div class="panel panel-default">
         <!-- Default panel contents -->
-        <div class="panel-heading">All Products</div>
+        <div class="panel-heading">All Storages</div>
         <table class="table table-striped">
             <thead>
             <tr>
@@ -40,20 +40,20 @@
             </thead>
             <tbody>
 
-            @foreach($products as $product)
+            @foreach($storages as $storage)
                 <tr>
-                    <td> {{ $product->name }} </td>
-                    <td> {{ $product->createdBy }}</td>
+                    <td> {{ $storage->name }} </td>
+                    <td> {{ $storage->createdBy }}</td>
                     <td>
-                        <span data-toggle="tooltip" data-placement="top" title="{{ $product->created_at }}">
-                            {{ Carbon\Carbon::parse($product->created_at)->diffForHumans() }}
+                        <span data-toggle="tooltip" data-placement="top" title="{{ $storage->created_at }}">
+                            {{ Carbon\Carbon::parse($storage->created_at)->diffForHumans() }}
                         </span>
                     </td>
                     <td>
-                        <?php echo Modal::named('delete_' . $product->id)
-                                ->withTitle('Delete ' . $product->name)
+                        <?php echo Modal::named('delete_' . $storage->id)
+                                ->withTitle('Delete ' . $storage->name)
                                 ->withButton(Button::danger('delete')->setSize('btn-xs'))
-                                ->withBody(view('modals.products_delete_product')->with('product', $product)->render());
+                                ->withBody(view('modals.storages_delete_storage')->with('storage', $storage)->render());
                         ?>
                     </td>
                 </tr>

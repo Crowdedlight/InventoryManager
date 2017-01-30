@@ -12,8 +12,9 @@
             <ul class="nav navbar-nav">
 
                 @if(Auth::check())
-
+                    <li><a href="{{ route('event.overview') }}">Overview</a></li>
                     <li><a href="{{ route('event.products') }}">Products</a></li>
+                    <li><a href="{{ route('event.storages') }}">Storages</a></li>
                 @endif
             </ul>
 
