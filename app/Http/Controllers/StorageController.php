@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Storage;
+use App\Models\Product;
+use App\Http\Requests\StockStorageRequest;
 use DebugBar;
 
 class StorageController extends Controller
@@ -40,6 +42,33 @@ class StorageController extends Controller
 
         return redirect()->route('event.storages');
 
+    }
+
+    public function StockStorage(Request $request, $eventID)
+    {
+        $storageID = (int) $request->input('storage');
+        $storage = Storage::find($storageID);
+
+        $stockUpProds = $request->input();
+
+        dd($request->input());
+        //Remove every key/pair but products
+        array_pull($stockUpProds, '_token');
+        array_pull($stockUpProds, '_action');
+        array_pull($stockUpProds, 'storage');
+
+        $keys = array_keys($stockUpProds);
+
+        dd($stockUpProds);
+
+        for($i = 0; $i < count($stockUpProds); $i++)
+        {
+            $product = $storage->products()->where('FK_productID', $keys[$i])->first();
+            $product->pivot->amount += $stockUpProds[$keys[$i]];
+            $product->pivot->save();
+        }
+
+        return redirect()->route('event.overview');
     }
 
     public function delete(Request $request, $id)

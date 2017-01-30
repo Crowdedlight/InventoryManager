@@ -3858,55 +3858,6 @@
             "time": "2017-01-03 13:51:32"
         },
         {
-            "name": "watson/bootstrap-form",
-            "version": "1.1.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/dwightwatson/bootstrap-form.git",
-                "reference": "e09f2a422656ba22cf22c7f47af7142882ad06a4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/dwightwatson/bootstrap-form/zipball/e09f2a422656ba22cf22c7f47af7142882ad06a4",
-                "reference": "e09f2a422656ba22cf22c7f47af7142882ad06a4",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/config": "~5.0",
-                "illuminate/session": "~5.0",
-                "illuminate/support": "~5.0",
-                "laravelcollective/html": "~5.0",
-                "php": ">=5.4.0"
-            },
-            "require-dev": {
-                "mockery/mockery": "0.9.*",
-                "phpunit/phpunit": "~4.6"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Watson\\BootstrapForm\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Dwight Watson",
-                    "email": "dwightwatson@me.com"
-                }
-            ],
-            "description": "Laravel 5 form wrappers for Bootstrap 3.",
-            "keywords": [
-                "bootstrap",
-                "form",
-                "laravel"
-            ],
-            "time": "2017-01-10 11:40:22"
-        },
-        {
             "name": "webmozart/assert",
             "version": "1.2.0",
             "source": {

@@ -179,7 +179,7 @@ return [
 
         //Custom Stuff
         Collective\Html\HtmlServiceProvider::class,
-        Watson\BootstrapForm\BootstrapFormServiceProvider::class,
+        AdamWathan\BootForms\BootFormsServiceProvider::class,
         Bootstrapper\BootstrapperL5ServiceProvider::class,
 
         //IDE HELPER
@@ -262,7 +262,7 @@ return [
 
         'Form'     => Collective\Html\FormFacade::class,
         'HTML'     => Collective\Html\HtmlFacade::class,
-        'BootForm' => Watson\BootstrapForm\Facades\BootstrapForm::class,
+        'BootForm' => AdamWathan\BootForms\Facades\BootForm::class,
         'DebugBar' => Barryvdh\Debugbar\Facade::class,
 
     ],

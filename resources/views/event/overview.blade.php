@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <?php $storages = $event->storages()->get(); ?>
+    <?php $storages = $event->storages()->orderBy('depot', 'DESC')->get(); ?>
 
     <div class="row">
         <div class="col-md-9">
@@ -50,7 +50,19 @@
                         ->withTitle('Stock Storage')
                         ->withButton(Button::info('Stock Storage')->block())
                         ->withBody(view('modals.event_stock_storage')
-                                ->with('eventID', Auth::user()->Event()->id)
+                                ->with('event', Auth::user()->Event())
+                                ->render())
+                ?>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="jumbotron">
+                <?php echo Modal::named('moveProduct')
+                        ->withTitle('Move Product')
+                        ->withButton(Button::info('Move Product')->block())
+                        ->withBody(view('modals.event_move_product')
+                                ->with('event', Auth::user()->Event())
                                 ->render())
                 ?>
             </div>

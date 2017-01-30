@@ -21,13 +21,13 @@
                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
                 <?php
                 if(!$user->admin):
-                    echo BootForm::open(['route' => ['admin.promote_user', 'id' => $user->id]]);
-                    echo BootForm::hidden('_action', 'promote_user');
+                    echo BootForm::open()->post()->action(route('admin.promote_user', $user->id));
+                    echo BootForm::hidden('promote_user', '_action');
                     echo Button::submit()->success()->withValue('Promote');
                     echo BootForm::close();
                 else:
-                    echo BootForm::open(['route' => ['admin.demote_user', 'id' => $user->id]]);
-                    echo BootForm::hidden('_action', 'demote_user');
+                    echo BootForm::open()->post()->action(route('admin.demote_user', $user->id));
+                    echo BootForm::hidden('demote_user', '_action');
                     echo Button::submit()->danger()->withValue('Demote');
                     echo BootForm::close();
                 endif;

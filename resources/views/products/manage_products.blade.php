@@ -6,8 +6,9 @@
         <div class="col-md-9">
             <div class="jumbotron">
                 <h1>Manage Products</h1>
-
-                <?php echo BootForm::text('search_product', 'Search Product') ?>
+                <?php echo BootForm::open() ?>
+                <?php echo BootForm::text('Search Product', 'search_product') ?>
+                <?php echo BootForm::close() ?>
                 <ul class="list-group" id="found_products">
                 </ul>
             </div>

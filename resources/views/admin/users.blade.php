@@ -6,8 +6,9 @@
     <div class="col-md-9">
         <div class="jumbotron">
             <h1>Manage Users</h1>
-
-            <?php echo BootForm::text('search_user', 'Search User') ?>
+            <?php echo BootForm::open() ?>
+            <?php echo BootForm::text('Search User', 'search_user') ?>
+            <?php echo BootForm::close() ?>
             <ul class="list-group" id="found_users">
             </ul>
         </div>

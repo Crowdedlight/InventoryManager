@@ -29,12 +29,14 @@ Route::group(['middleware' => ['web', 'auth']], function () {
     Route::get('/event/logout', ['uses' => 'EventController@logout', 'as' => 'event.logout']);
 
     Route::get('/event/products', ['uses' => 'ProductController@index', 'as' => 'event.products']);
-    Route::post('/event/{eventID}/product/add', ['uses' => 'ProductController@add', 'as' => 'product.add']);
+    Route::post('/event/{eventID}/product/add', ['uses' => 'ProductController@add', 'as' => 'products.add']);
     Route::post('/event/product/{id}/delete', ['uses' => 'ProductController@delete', 'as' => 'products.delete_product']);
 
     Route::get('/event/storages', ['uses' => 'StorageController@index', 'as' => 'event.storages']);
-    Route::post('/event/{eventID}/storage/add', ['uses' => 'StorageController@add', 'as' => 'storage.add']);
+    Route::post('/event/{eventID}/storage/add', ['uses' => 'StorageController@add', 'as' => 'storages.add']);
     Route::post('/event/storage/{id}/delete', ['uses' => 'StorageController@delete', 'as' => 'storages.delete_storage']);
+    Route::post('/event/{id}/storage/stock', ['uses' => 'StorageController@StockStorage', 'as' => 'storages.stock_storage']);
+    Route::post('/event/{id}/storage/move', ['uses' => 'StorageController@MoveProduct', 'as' => 'storages.move_product']);
 
     Route::get('/auth/logout', ['uses' => 'AuthController@logout', 'as' => 'auth.logout']);
 });

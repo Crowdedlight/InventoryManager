@@ -1,7 +1,7 @@
 <?php
-echo BootForm::open(['route' => ['storage.add', 'eventID' => $eventID]]);
-echo BootForm::hidden('_action', 'add_storage');
-echo BootForm::text('name', 'Storage Name');
-echo BootForm::checkbox('depot', 'Is Depot');
+echo BootForm::open()->post()->action(route('storages.add', $eventID));
+echo BootForm::hidden('add_storage', '_action');
+echo BootForm::text('Storage Name', 'name');
+echo BootForm::checkbox('Is Depot', 'depot');
 echo Button::submit()->withValue('Save')->block();
 echo BootForm::close();

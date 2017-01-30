@@ -6,8 +6,9 @@
         <div class="col-md-9">
             <div class="jumbotron">
                 <h1>Manage Storages</h1>
-
-                <?php echo BootForm::text('search_storage', 'Search Storage') ?>
+                <?php echo BootForm::open() ?>
+                <?php echo BootForm::text('Search Storage', 'search_storage') ?>
+                <?php echo BootForm::close() ?>
                 <ul class="list-group" id="found_storage">
                 </ul>
             </div>

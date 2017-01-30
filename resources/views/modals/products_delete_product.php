@@ -11,8 +11,8 @@
     <div class="modal-footer">
         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
         <?php
-        echo BootForm::open(['route' => ['products.delete_product', 'id' => $product->id]]);
-        echo BootForm::hidden('_action', 'delete_product');
+        echo BootForm::open()->post()->action(route('products.delete_product', $product->id));
+        echo BootForm::hidden('delete_product', '_action');
         echo Button::submit()->danger()->withValue('Are you Sure?');
         echo BootForm::close();
         ?>
