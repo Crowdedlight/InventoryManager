@@ -14,7 +14,7 @@ $options = $storages->mapWithKeys(function ($item) {
     return [$item['id'] => $item['name']];
 });
 
-echo BootForm::select('Storage', 'storage', $options);
+echo BootForm::select('Storage', 'storageFrom', $options);
 
 $counter = 0;
 foreach($products as $product)

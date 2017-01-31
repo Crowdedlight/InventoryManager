@@ -52,7 +52,10 @@
                                     <td class="bg-success">
                                 @endif
                                     @if ($prod != null)
-                                        {{ $prod->pivot->amount }} (<small>{{$prod->pivot->sold_amount}}</small>)
+                                        <strong>{{ $prod->pivot->amount }}</strong>
+                                        @if (!$storage->depot)
+                                            <small class="pull-right">({{$prod->pivot->sold_amount}})</small>
+                                        @endif
                                     @endif
                                     </td>
                             @endforeach
@@ -81,6 +84,18 @@
                         ->withTitle('Move Product')
                         ->withButton(Button::info('Move Product')->block())
                         ->withBody(view('modals.event_move_product')
+                                ->with('event', Auth::user()->Event())
+                                ->render())
+                ?>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="jumbotron">
+                <?php echo Modal::named('updateSales')
+                        ->withTitle('Update Sales')
+                        ->withButton(Button::info('Update Sales')->block())
+                        ->withBody(view('modals.event_update_sales')
                                 ->with('event', Auth::user()->Event())
                                 ->render())
                 ?>

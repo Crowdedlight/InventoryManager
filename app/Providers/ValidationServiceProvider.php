@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Storage;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Product;
@@ -22,7 +23,7 @@ class ValidationServiceProvider extends ServiceProvider
                 return true;
 
             $allData = $validator->getData();
-            $storageToID = (int) $allData['from'];
+            $storageToID = (int) $allData['storageFrom'];
 
             $productID = (int) explode('.',$attribute)[1];
             $product = Product::where('id', $productID)->with('storages')->first();
@@ -34,6 +35,20 @@ class ValidationServiceProvider extends ServiceProvider
             }
 
             return true;
+        });
+
+        Validator::extend('isnotdepot', function ($attribute, $value, $parameters, $validator) {
+
+            //if input is null, return true as we don't validate for null
+            if ($value == null)
+                return true;
+
+            $allData = $validator->getData();
+            $storageToID = (int) $allData['storageFrom'];
+            $storage = Storage::where('id', $storageToID)->first();
+
+            //If depot return false, as we don't want depots, else return true, as it is not depot. (Used mainly for salesUpdate, can't sell from depot)
+            return !$storage->depot;
         });
     }
 

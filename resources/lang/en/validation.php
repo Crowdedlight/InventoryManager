@@ -88,6 +88,7 @@ return [
 
     //Custome Validation Messages
     'largerthenstock'      => 'The chosen amount is larger than what the storage currently holds',
+    'isnotdepot'           => 'Chosen storage is a depot',
 
     /*
     |--------------------------------------------------------------------------

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateSalesRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Requests\MoveStorageRequest;
@@ -42,12 +43,11 @@ class StorageController extends Controller
         }
 
         return redirect()->route('event.storages');
-
     }
 
     public function StockStorage(StockStorageRequest $request, $eventID)
     {
-        $storageID = (int) $request->input('storage');
+        $storageID = (int) $request->input('storageFrom');
         $storage = Storage::where('id', $storageID)->with('products')->first();
 
         $stockUpProds = $request->input('stockProducts');
@@ -73,10 +73,10 @@ class StorageController extends Controller
     public function MoveProduct(MoveStorageRequest $request, $eventID)
     {
         //Remember to use eager loading to save database calls
-        $storageFromID = (int) $request->input('from');
+        $storageFromID = (int) $request->input('storageFrom');
         $storageFrom = Storage::where('id', $storageFromID)->with('products')->first();
 
-        $storageToID = (int) $request->input('to');
+        $storageToID = (int) $request->input('storageTo');
         $storageTo = Storage::where('id', $storageToID)->with('products')->first();
 
         $moveProds = $request->input('moveProducts');
@@ -97,6 +97,32 @@ class StorageController extends Controller
             $productTo = $storageTo->products->where('id', $keys[$i])->first();
             $productTo->pivot->amount += $moveProds[$keys[$i]];
             $productTo->pivot->save();
+        }
+
+        $request->session()->flash('success', 'success');
+
+        return redirect()->route('event.overview');
+    }
+
+    public function UpdateSales(UpdateSalesRequest $request, $eventID)
+    {
+        $storageID = (int) $request->input('storageFrom');
+        $storage = Storage::where('id', $storageID)->with('products')->first();
+
+        $stockUpProds = $request->input('salesProducts');
+
+        $keys = array_keys($stockUpProds);
+
+        for($i = 0; $i < count($stockUpProds); $i++)
+        {
+            //skip if not entered a value
+            if ($stockUpProds[$keys[$i]] == null)
+                continue;
+
+            $product = $storage->products->where('id', $keys[$i])->first();
+            $product->pivot->amount -= $stockUpProds[$keys[$i]];
+            $product->pivot->sold_amount += $stockUpProds[$keys[$i]];
+            $product->pivot->save();
         }
 
         $request->session()->flash('success', 'success');
