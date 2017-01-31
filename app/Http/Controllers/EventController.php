@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Event;
 use App\Models\Storage;
-use App\Http\Requests;
+use Illuminate\Http\Request;
+use App\Http\Requests\CreateEventRequest;
+use App\Http\Requests\CloseEventRequest;
 use Carbon\Carbon;
 
 class EventController extends Controller
@@ -24,7 +25,7 @@ class EventController extends Controller
         return view('event.index');
     }
 
-    public function create(Requests\CreateEventRequest $request)
+    public function create(CreateEventRequest $request)
     {
         $event = new Event();
         $event->name        = $request->input('event_name');
@@ -36,7 +37,7 @@ class EventController extends Controller
         return redirect()->route('home');
     }
 
-    public function overview()
+    public function overview(Request $request)
     {
         $event = Auth::user()->Event();
 
@@ -45,6 +46,9 @@ class EventController extends Controller
         }
 
         view()->share('event', $event);
+
+        //reflash for success messages
+        $request->session()->reflash();
 
         return view('event.overview');
 
@@ -72,7 +76,7 @@ class EventController extends Controller
         return redirect()->route('home');
     }
 
-    public function close(Requests\CloseEventRequest $request, $id)
+    public function close(CloseEventRequest $request, $id)
     {
         $event = Event::find($id);
 

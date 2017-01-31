@@ -1,5 +1,10 @@
 <?php
-echo BootForm::open()->post()->action(route('storages.stock_storage',$event->id));
+$columnSizes = [
+        'sm' => [4, 8],
+        'lg' => [2, 10]
+];
+
+echo BootForm::openHorizontal($columnSizes)->post()->action(route('storages.stock_storage',$event->id));
 echo BootForm::hidden('_action')->value('stock_storage');
 
 $products = $event->products()->get();

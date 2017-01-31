@@ -48,7 +48,7 @@ class MoveStorageRequest extends FormRequest
 
         for ($i = 0; $i < count($input); $i++) {
 
-            $messages['products.' . $keys[$i]] = 'Must be a number';
+            $messages['products.' . $keys[$i] . '.numeric'] = 'Must be a number';
         }
         return $messages;
     }

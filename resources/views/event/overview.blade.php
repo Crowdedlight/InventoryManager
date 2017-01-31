@@ -4,6 +4,25 @@
 
     <?php $storages = $event->storages()->orderBy('depot', 'DESC')->get(); ?>
 
+
+    @if($errors->all() != null || count($errors->all()) > 0)
+        <div class="alert-danger alert">
+            <strong>Error! </strong> Error occured, please check modal
+        </div>
+    @endif
+
+    @if(Session::pull('success') != null)
+        <div class="alert-success alert" id="successMsg">
+            <strong>Success! </strong>
+        </div>
+        <script type="application/javascript">
+            setTimeout(
+                    function() {
+                        $('#successMsg').slideUp(1000);
+                    }, 3000);
+        </script>
+    @endif
+
     <div class="row">
         <div class="col-md-9">
             <div class="panel panel-default">

@@ -64,6 +64,8 @@ class StorageController extends Controller
             $product->pivot->save();
         }
 
+        $request->session()->flash('success', 'success');
+
         return redirect()->route('event.overview');
     }
 
