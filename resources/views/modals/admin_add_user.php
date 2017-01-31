@@ -1,6 +1,6 @@
 <?php
 echo BootForm::open()->post()->action(route('admin.add_user'));
-echo BootForm::hidden('add_user', '_action');
+echo BootForm::hidden('_action')->value('add_user');
 echo BootForm::text('Username', 'username');
 echo BootForm::text('Name', 'name');
 echo BootForm::email('Email', 'email');

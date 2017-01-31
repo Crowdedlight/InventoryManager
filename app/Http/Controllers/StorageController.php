@@ -44,31 +44,32 @@ class StorageController extends Controller
 
     }
 
-    public function StockStorage(Request $request, $eventID)
+    public function StockStorage(StockStorageRequest $request, $eventID)
     {
         $storageID = (int) $request->input('storage');
         $storage = Storage::find($storageID);
 
-        $stockUpProds = $request->input();
-
-        dd($request->input());
-        //Remove every key/pair but products
-        array_pull($stockUpProds, '_token');
-        array_pull($stockUpProds, '_action');
-        array_pull($stockUpProds, 'storage');
+        $stockUpProds = $request->input('products');
 
         $keys = array_keys($stockUpProds);
 
-        dd($stockUpProds);
-
         for($i = 0; $i < count($stockUpProds); $i++)
         {
+            //skip if not entered a value
+            if ($stockUpProds[$keys[$i]] == null)
+                continue;
+
             $product = $storage->products()->where('FK_productID', $keys[$i])->first();
             $product->pivot->amount += $stockUpProds[$keys[$i]];
             $product->pivot->save();
         }
 
         return redirect()->route('event.overview');
+    }
+
+    public function MoveProduct(Request $request, $eventID)
+    {
+        
     }
 
     public function delete(Request $request, $id)

@@ -1,6 +1,6 @@
 <?php
 echo BootForm::open()->post()->action(route('storages.stock_storage',$event->id));
-echo BootForm::hidden('stock_storage', '_action');
+echo BootForm::hidden('_action')->value('stock_storage');
 
 $products = $event->products()->get();
 $storages = $event->storages()->orderBy('depot', 'DESC')->get();
@@ -14,7 +14,7 @@ echo BootForm::select('Storage', 'storage', $options);
 $counter = 0;
 foreach($products as $product)
 {
-    echo Bootform::text($product->name, 'product[' . $counter . ']')->data('productID', $product->id);
+    echo Bootform::text($product->name, 'products[' . $product->id . ']' )->data('productID', $product->id);
     $counter++;
 }
 echo Button::submit()->withValue('Save')->block();

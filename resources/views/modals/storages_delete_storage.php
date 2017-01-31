@@ -12,7 +12,7 @@
         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
         <?php
         echo BootForm::open()->post()->action(route('storages.delete_storage',$storage->id));
-        echo BootForm::hidden('delete_product', '_action');
+        echo BootForm::hidden('_action')->value('delete_product');
         echo Button::submit()->danger()->withValue('Are you Sure?');
         echo BootForm::close();
         ?>

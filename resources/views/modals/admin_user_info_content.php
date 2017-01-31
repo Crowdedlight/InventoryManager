@@ -17,12 +17,12 @@
         <?php
         if(!$user->admin):
             echo BootForm::open()->post()->action(route('admin.promote_user', $user->id));
-            echo BootForm::hidden('promote_user', '_action');
+            echo BootForm::hidden('_action')->value('promote_user');
             echo Button::submit()->success()->withValue('Promote');
             echo BootForm::close();
         else:
             echo BootForm::open()->post()->action(route('admin.demote_user', $user->id));
-            echo BootForm::hidden('demote_user', '_action');
+            echo BootForm::hidden('_action')->value('demote_user');
             echo Button::submit()->danger()->withValue('Demote');
             echo BootForm::close();
         endif;

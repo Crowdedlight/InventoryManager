@@ -14,7 +14,7 @@
         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
         <?php
         echo BootForm::open()->post()->action(route('admin.delete_user', $user->id));
-        echo BootForm::hidden('delete_user', '_action');
+        echo BootForm::hidden('_action')->value('delete_user');
         echo Button::submit()->danger()->withValue('Are you Sure?');
         echo BootForm::close();
         ?>
