@@ -186,6 +186,9 @@ return [
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
 
+        //ValidationServiceProvider
+        App\Providers\ValidationServiceProvider::class,
+
 
     ],
 

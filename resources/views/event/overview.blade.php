@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <?php $storages = $event->storages()->orderBy('depot', 'DESC')->get(); ?>
+    <?php $storages = $event->storages()->orderBy('depot', 'DESC')->with('products')->get(); ?>
 
 
     @if($errors->all() != null || count($errors->all()) > 0)
@@ -37,16 +37,16 @@
                     </tr>
                     </thead>
                     <tbody>
-                        @foreach ($event->products()->get() as $product)
+                        @foreach ($event->products as $product)
                         <tr>
                             <td>{{ $product->name }}</td>
 
-                            @foreach ($event->storages()->get() as $storage)
+                            @foreach ($storages as $storage)
                                 <?php $prod = $storage->products->where('id', $product->id)->first(); ?>
 
                                 @if($prod->pivot->amount < 5)
                                     <td class="bg-danger">
-                                @elseif ($prod->pivot->amount > 5 && $prod->pivot->amount < 30)
+                                @elseif ($prod->pivot->amount >= 5 && $prod->pivot->amount < 30)
                                     <td class="bg-warning">
                                 @else
                                     <td class="bg-success">

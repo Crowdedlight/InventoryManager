@@ -86,6 +86,9 @@ return [
     'uploaded'             => 'The :attribute failed to upload.',
     'url'                  => 'The :attribute format is invalid.',
 
+    //Custome Validation Messages
+    'largerthenstock'      => 'The chosen amount is larger than what the storage currently holds',
+
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines

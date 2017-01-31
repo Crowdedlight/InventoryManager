@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+use App\Http\Requests\MoveStorageRequest;
+use App\Http\Requests\StockStorageRequest;
 use App\Models\Storage;
 use App\Models\Product;
-use App\Http\Requests\StockStorageRequest;
 use DebugBar;
 
 class StorageController extends Controller
@@ -47,9 +48,9 @@ class StorageController extends Controller
     public function StockStorage(StockStorageRequest $request, $eventID)
     {
         $storageID = (int) $request->input('storage');
-        $storage = Storage::find($storageID);
+        $storage = Storage::where('id', $storageID)->with('products')->first();
 
-        $stockUpProds = $request->input('products');
+        $stockUpProds = $request->input('stockProducts');
 
         $keys = array_keys($stockUpProds);
 
@@ -59,7 +60,7 @@ class StorageController extends Controller
             if ($stockUpProds[$keys[$i]] == null)
                 continue;
 
-            $product = $storage->products()->where('FK_productID', $keys[$i])->first();
+            $product = $storage->products->where('id', $keys[$i])->first();
             $product->pivot->amount += $stockUpProds[$keys[$i]];
             $product->pivot->save();
         }
@@ -69,9 +70,38 @@ class StorageController extends Controller
         return redirect()->route('event.overview');
     }
 
-    public function MoveProduct(Request $request, $eventID)
+    public function MoveProduct(MoveStorageRequest $request, $eventID)
     {
-        
+        //Remember to use eager loading to save database calls
+        $storageFromID = (int) $request->input('from');
+        $storageFrom = Storage::where('id', $storageFromID)->with('products')->first();
+
+        $storageToID = (int) $request->input('to');
+        $storageTo = Storage::where('id', $storageToID)->with('products')->first();
+
+        $moveProds = $request->input('moveProducts');
+        $keys = array_keys($moveProds);
+
+        for($i = 0; $i < count($moveProds); $i++)
+        {
+            //skip if not entered a value
+            if ($moveProds[$keys[$i]] == null)
+                continue;
+
+            //subtract from storage
+            $productFrom = $storageFrom->products->where('id', $keys[$i])->first();
+            $productFrom->pivot->amount -= $moveProds[$keys[$i]];
+            $productFrom->pivot->save();
+
+            //Add to new storage
+            $productTo = $storageTo->products->where('id', $keys[$i])->first();
+            $productTo->pivot->amount += $moveProds[$keys[$i]];
+            $productTo->pivot->save();
+        }
+
+        $request->session()->flash('success', 'success');
+
+        return redirect()->route('event.overview');
     }
 
     public function delete(Request $request, $id)

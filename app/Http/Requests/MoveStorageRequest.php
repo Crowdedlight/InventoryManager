@@ -27,14 +27,8 @@ class MoveStorageRequest extends FormRequest
 
         $rules = [];
 
-        $input = $this->input('products');
+        $rules['moveProducts.*'] = 'numeric|nullable|largerthenstock';
 
-        $keys = array_keys($input);
-
-        for ($i = 0; $i < count($input); $i++) {
-
-            $rules['products.' . $keys[$i]] = 'numeric|nullable';
-        }
         return $rules;
     }
 
@@ -42,14 +36,8 @@ class MoveStorageRequest extends FormRequest
     {
         $messages = [];
 
-        $input = $this->input('products');
+        $messages['moveProducts.*.numeric'] = 'Must be a number';
 
-        $keys = array_keys($input);
-
-        for ($i = 0; $i < count($input); $i++) {
-
-            $messages['products.' . $keys[$i] . '.numeric'] = 'Must be a number';
-        }
         return $messages;
     }
 }

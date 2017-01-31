@@ -20,7 +20,7 @@ echo BootForm::select('To', 'to', $options)->select($storages[1]->id);
 $counter = 0;
 foreach($products as $product)
 {
-    echo Bootform::text($product->name, 'products[' . $product->id . ']' )->data('productID', $product->id);
+    echo Bootform::text($product->name, 'moveProducts[' . $product->id . ']' )->data('productID', $product->id);
     $counter++;
 }
 echo Button::submit()->withValue('Save')->block();
