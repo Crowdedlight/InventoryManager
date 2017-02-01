@@ -16,7 +16,6 @@ class StorageController extends Controller
     public function index()
     {
         $storages = Auth::user()->Event()->storages()->get();
-
         //DebugBar::info($products);
         View()->share('storages', $storages);
 
@@ -132,7 +131,16 @@ class StorageController extends Controller
 
     public function delete(Request $request, $id)
     {
-        Product::find($id)->storages()->detach();
+        //for now, only admins can delete products
+        if(Auth::user()->admin == false)
+        {
+            $request->session()->flash('error', 'Only Admins can delete products');
+            return redirect()->route('event.storages');
+        }
+        $storageID = (int) $id;
+
+        Storage::destroy($storageID);
+        $request->session()->flash('success', 'Deleted storage');
 
         return redirect()->route('event.storages');
     }

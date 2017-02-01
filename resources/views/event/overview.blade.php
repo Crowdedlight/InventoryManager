@@ -1,9 +1,7 @@
 @extends('layout.master')
 
 @section('content')
-
-    <?php $storages = $event->storages()->orderBy('depot', 'DESC')->with('products')->get(); ?>
-
+    <?php $storages = $event->storages()->orderBy('depot', 'DESC')->with('products')->get(); $user = Auth::user(); ?>
 
     @if($errors->all() != null || count($errors->all()) > 0)
         <div class="alert-danger alert">
@@ -24,7 +22,7 @@
     @endif
 
     <div class="row">
-        <div class="col-md-9">
+        <div class="col-md-9 min-height">
             <div class="panel panel-default">
                 <div class="panel-heading">Overview</div>
                 <table class="table table-striped">
@@ -40,7 +38,6 @@
                         @foreach ($event->products as $product)
                         <tr>
                             <td>{{ $product->name }}</td>
-
                             @foreach ($storages as $storage)
                                 <?php $prod = $storage->products->where('id', $product->id)->first(); ?>
 
@@ -65,41 +62,42 @@
                 </table>
             </div>
         </div>
-
-        <div class="col-md-3">
-            <div class="jumbotron">
-                <?php echo Modal::named('stockStorage')
-                        ->withTitle('Stock Storage')
-                        ->withButton(Button::info('Stock Storage')->block())
-                        ->withBody(view('modals.event_stock_storage')
-                                ->with('event', Auth::user()->Event())
-                                ->render())
-                ?>
+        @if($user->event()->active)
+            <div class="col-md-3">
+                <div class="jumbotron">
+                    <?php echo Modal::named('stockStorage')
+                            ->withTitle('Stock Storage')
+                            ->withButton(Button::info('Stock Storage')->block())
+                            ->withBody(view('modals.event_stock_storage')
+                                    ->with('event', Auth::user()->Event())
+                                    ->render())
+                    ?>
+                </div>
             </div>
-        </div>
 
-        <div class="col-md-3">
-            <div class="jumbotron">
-                <?php echo Modal::named('moveProduct')
-                        ->withTitle('Move Product')
-                        ->withButton(Button::info('Move Product')->block())
-                        ->withBody(view('modals.event_move_product')
-                                ->with('event', Auth::user()->Event())
-                                ->render())
-                ?>
+            <div class="col-md-3">
+                <div class="jumbotron">
+                    <?php echo Modal::named('moveProduct')
+                            ->withTitle('Move Product')
+                            ->withButton(Button::info('Move Product')->block())
+                            ->withBody(view('modals.event_move_product')
+                                    ->with('event', Auth::user()->Event())
+                                    ->render())
+                    ?>
+                </div>
             </div>
-        </div>
 
-        <div class="col-md-3">
-            <div class="jumbotron">
-                <?php echo Modal::named('updateSales')
-                        ->withTitle('Update Sales')
-                        ->withButton(Button::info('Update Sales')->block())
-                        ->withBody(view('modals.event_update_sales')
-                                ->with('event', Auth::user()->Event())
-                                ->render())
-                ?>
+            <div class="col-md-3">
+                <div class="jumbotron">
+                    <?php echo Modal::named('updateSales')
+                            ->withTitle('Update Sales')
+                            ->withButton(Button::info('Update Sales')->block())
+                            ->withBody(view('modals.event_update_sales')
+                                    ->with('event', Auth::user()->Event())
+                                    ->render())
+                    ?>
+                </div>
             </div>
-        </div>
+        @endif
     </div>
 @endsection

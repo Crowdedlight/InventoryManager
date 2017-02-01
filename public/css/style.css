@@ -22,3 +22,7 @@
     padding-left: 25px;
     padding-right: 25px;
 }
+
+.min-height {
+    min-height: 500px;
+}

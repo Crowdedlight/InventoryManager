@@ -1,11 +1,12 @@
 <div class="modal-body">
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-12">
             <p>Name: <?php echo $storage->name; ?></p>
             <p>Last update:
             <span data-toggle="tooltip" data-placement="top" title="<?=$storage->updated_at ?>">
             	<?= Carbon\Carbon::parse($storage->updated_at)->diffForHumans() ?>
             </span></p>
+            <div class=""><strong>THIS WILL REMOVE ALL ENTRIES OF THIS STORAGE. SO YOU WILL ESSENTIAL REMOVE THIS STORAGE AND ALL ITS VALUES FROM EVERY PRODUCT IT HAS SOLD/KEPT</strong></div>
         </div>
     </div>
     <div class="modal-footer">

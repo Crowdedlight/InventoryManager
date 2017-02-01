@@ -30,6 +30,6 @@ class User extends Authenticatable
     public function Event()
     {
 
-        return Event::find($this->FK_eventID);
+        return Event::where('id', $this->FK_eventID)->first();
     }
 }

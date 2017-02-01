@@ -21,6 +21,7 @@ class CreateProductsStoragesTable extends Migration
             $table->timestamps();
             $table->integer('FK_storageID')->unsigned();
             $table->integer('FK_productID')->unsigned();
+            $table->softDeletes();
         });
 
         Schema::table('products_storages', function ($table) {

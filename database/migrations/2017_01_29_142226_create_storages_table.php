@@ -20,6 +20,7 @@ class CreateStoragesTable extends Migration
             $table->boolean('depot')->default(false);
             $table->integer('FK_eventID')->unsigned();
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::table('storages', function ($table) {

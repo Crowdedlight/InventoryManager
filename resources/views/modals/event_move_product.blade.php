@@ -14,8 +14,14 @@ $options = $storages->mapWithKeys(function ($item) {
     return [$item['id'] => $item['name']];
 });
 
+$storageToDefault = $storages->where('depot', false)->first();
+
 echo BootForm::select('From', 'storageFrom', $options);
-echo BootForm::select('To', 'storageTo', $options)->select($storages[1]->id);
+
+if($storageToDefault != null)
+    echo BootForm::select('To', 'storageTo', $options)->select($storageToDefault->id);
+else
+    echo BootForm::select('To', 'storageTo', $options);
 
 $counter = 0;
 foreach($products as $product)

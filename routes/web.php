@@ -13,6 +13,7 @@
 
 Route::group(['middleware' => ['web']], function () {
     Route::get('/', ['uses' => 'HomeController@index', 'as' => 'home']);
+    Route::get('/login', ['uses' => 'HomeController@index', 'as' => 'login.page']);
     Route::post('/auth/login', ['uses' => 'AuthController@login', 'as' => 'auth.login']);
 });
 
@@ -27,6 +28,7 @@ Route::group(['middleware' => ['web', 'auth']], function () {
     Route::post('/event/{id}/close', ['uses' => 'EventController@close', 'as' => 'event.close']);
     Route::post('/event/{id}/add', ['uses' => 'EventController@addStorage', 'as' => 'event.add_storage']);
     Route::get('/event/logout', ['uses' => 'EventController@logout', 'as' => 'event.logout']);
+    Route::post('/event/{id}/close', ['uses' => 'EventController@close', 'as' => 'events.close_event']);
 
     Route::get('/event/products', ['uses' => 'ProductController@index', 'as' => 'event.products']);
     Route::post('/event/{eventID}/product/add', ['uses' => 'ProductController@add', 'as' => 'products.add']);

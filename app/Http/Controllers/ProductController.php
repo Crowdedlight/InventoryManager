@@ -9,12 +9,15 @@ use DebugBar;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $products = Auth::user()->Event()->products()->get();
 
         //DebugBar::info($products);
         View()->share('products', $products);
+
+        //for error messages, reflash session
+        $request->session()->reflash();
 
         return view('products.manage_products');
     }
@@ -40,7 +43,16 @@ class ProductController extends Controller
 
     public function delete(Request $request, $id)
     {
-        Product::find($id)->storages()->detach();
+        //for now, only admins can delete products
+        if(Auth::user()->admin == false)
+        {
+            $request->session()->flash('error', 'Only Admins can delete products');
+            return redirect()->route('event.products');
+        }
+        $productID = (int) $id;
+        Product::destroy($productID);
+
+        $request->session()->flash('success', 'Deleted product');
 
         return redirect()->route('event.products');
     }

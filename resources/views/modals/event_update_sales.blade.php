@@ -8,7 +8,7 @@ echo BootForm::openHorizontal($columnSizes)->post()->action(route('storages.upda
 echo BootForm::hidden('_action')->value('update_sales');
 
 $products = $event->products()->get();
-$storages = $event->storages()->orderBy('depot', 'DESC')->get();
+$storages = $event->storages()->where('depot', false)->orderBy('depot', 'DESC')->get();
 
 $options = $storages->mapWithKeys(function ($item) {
     return [$item['id'] => $item['name']];

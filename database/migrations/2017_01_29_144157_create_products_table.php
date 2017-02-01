@@ -19,6 +19,7 @@ class CreateProductsTable extends Migration
             $table->string('createdBy');
             $table->integer('FK_eventID')->unsigned();
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::table('products', function ($table) {

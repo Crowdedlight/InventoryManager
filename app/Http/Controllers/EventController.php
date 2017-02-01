@@ -16,11 +16,14 @@ use Carbon\Carbon;
 class EventController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
         $events = Event::orderBy('created_at', 'DESC')->paginate(10);
 
         view()->share('events', $events);
+
+        //reflash for error messages
+        $request->session()->reflash();
 
         return view('event.index');
     }
@@ -29,7 +32,7 @@ class EventController extends Controller
     {
         $event = new Event();
         $event->name        = $request->input('event_name');
-        $event->createdBy        = Auth::user()->name;
+        $event->createdBy   = Auth::user()->name;
         $event->date        = Carbon::today("Europe/copenhagen");
         $event->active      = true;
         $event->save();
@@ -39,7 +42,7 @@ class EventController extends Controller
 
     public function overview(Request $request)
     {
-        $event = Auth::user()->Event();
+        $event = Auth::user()->Event()->with('products')->first();
 
         if (is_null($event)) {
             return redirect()->route('events.logout');
@@ -78,14 +81,19 @@ class EventController extends Controller
 
     public function close(CloseEventRequest $request, $id)
     {
-        $event = Event::find($id);
+        $event = Event::where('id', $id)->first();
 
         if (is_null($event))
-            return redirect()->route('event.single', ['id' => $id]);
+        {
+            $request->session()->flash('error', 'An Error Occurred');
+            return redirect()->route('event.all', ['id' => $id]);
+        }
 
-        $event->active      = false;
+        $event->active = false;
         $event->save();
 
-        return redirect()->route('event.single', ['id' => $id]);
+        $request->session()->flash('success', 'success');
+
+        return redirect()->route('event.all');
     }
 }
