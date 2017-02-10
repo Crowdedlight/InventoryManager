@@ -3,9 +3,10 @@
 @section('content')
 
     <?php $error = Session::pull('error'); $user = Auth::user(); ?>
-    @if($error != null)
+
+    @if($errors->all() != null || count($errors->all()) > 0)
         <div class="alert-danger alert">
-            <strong>Error! </strong> {{$error}}
+            <strong>Error! </strong> Error occured, please check modal
         </div>
     @endif
 
@@ -33,14 +34,25 @@
             </div>
         </div>
 
-        @if($user->event()->active)
+        @if($user->Event()->active && $user->admin)
             <div class="col-md-3">
                 <div class="jumbotron">
                     <?php echo Modal::named('addProduct')
                             ->withTitle('Add Product')
                             ->withButton(Button::info('Add Product')->block())
                             ->withBody(view('modals.products_add_product')
-                                    ->with('eventID', Auth::user()->Event()->id)
+                                    ->with('eventID', $user->Event()->id)
+                                    ->render())
+                    ?>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="jumbotron">
+                    <?php echo Modal::named('importProduct')
+                            ->withTitle('Import Product')
+                            ->withButton(Button::info('Import Products')->block())
+                            ->withBody(view('modals.products_import_product')
+                                    ->with('eventID', $user->Event()->id)
                                     ->render())
                     ?>
                 </div>

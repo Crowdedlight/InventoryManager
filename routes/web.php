@@ -32,6 +32,7 @@ Route::group(['middleware' => ['web', 'auth']], function () {
 
     Route::get('/event/products', ['uses' => 'ProductController@index', 'as' => 'event.products']);
     Route::post('/event/{eventID}/product/add', ['uses' => 'ProductController@add', 'as' => 'products.add']);
+    Route::post('/event/{eventID}/product/import', ['uses' => 'ProductController@import', 'as' => 'products.import']);
     Route::post('/event/product/{id}/delete', ['uses' => 'ProductController@delete', 'as' => 'products.delete_product']);
 
     Route::get('/event/storages', ['uses' => 'StorageController@index', 'as' => 'event.storages']);

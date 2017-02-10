@@ -23,7 +23,7 @@ class EventController extends Controller
         view()->share('events', $events);
 
         //reflash for error messages
-        $request->session()->reflash();
+        $request->session()->keep(['error', 'success']);
 
         return view('event.index');
     }
@@ -42,8 +42,7 @@ class EventController extends Controller
 
     public function overview(Request $request)
     {
-        $event = Auth::user()->Event()->with('products')->first();
-
+        $event = Event::with('products')->where('id', Auth::user()->FK_eventID)->first();
         if (is_null($event)) {
             return redirect()->route('events.logout');
         }
@@ -51,10 +50,9 @@ class EventController extends Controller
         view()->share('event', $event);
 
         //reflash for success messages
-        $request->session()->reflash();
+        $request->session()->keep(['error', 'success']);
 
         return view('event.overview');
-
     }
 
     public function login(Request $request, $id)

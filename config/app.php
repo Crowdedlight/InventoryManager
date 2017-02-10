@@ -189,7 +189,8 @@ return [
         //ValidationServiceProvider
         App\Providers\ValidationServiceProvider::class,
 
-
+        //Excel provider
+        Maatwebsite\Excel\ExcelServiceProvider::class,
     ],
 
     /*
@@ -267,7 +268,7 @@ return [
         'HTML'     => Collective\Html\HtmlFacade::class,
         'BootForm' => AdamWathan\BootForms\Facades\BootForm::class,
         'DebugBar' => Barryvdh\Debugbar\Facade::class,
-
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
     ],
 
 ];

@@ -11,7 +11,8 @@
         "barryvdh/laravel-ide-helper": "^2.2",
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0",
-        "patricktalmadge/bootstrapper": "^5.9"
+        "patricktalmadge/bootstrapper": "^5.9",
+        "maatwebsite/excel": "~2.1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

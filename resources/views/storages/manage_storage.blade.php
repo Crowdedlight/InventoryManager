@@ -3,9 +3,10 @@
 @section('content')
 
     <?php $error = Session::pull('error'); $user = Auth::user(); ?>
-    @if($error != null)
+
+    @if($errors->all() != null || count($errors->all()) > 0)
         <div class="alert-danger alert">
-            <strong>Error! </strong> {{$error}}
+            <strong>Error! </strong> Error occured, please check modal
         </div>
     @endif
 
