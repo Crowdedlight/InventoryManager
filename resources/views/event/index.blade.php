@@ -30,7 +30,6 @@
             <th>Created By</th>
             <th>Created</th>
             <th>Status</th>
-            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -57,16 +56,16 @@
                     @if(!$event->active)
                         <span class="label label-danger" data-toggle="tooltip" data-placement="top" title="Finished">Finished</span>
                     @endif
+                    @if($user->admin && $event->active)
+                        <div class="pull-right">
+                            <?php echo Modal::named('close_' . $event->id)
+                                    ->withTitle('Close ' . $event->name)
+                                    ->withButton(Button::danger('Close Event')->setSize('btn-xs'))
+                                    ->withBody(view('modals.events_close_event')->with('event', $event)->render());
+                            ?>
+                        </div>
+                    @endif
                 </td>
-                @if($user->admin && $event->active)
-                    <td>
-                        <?php echo Modal::named('close_' . $event->id)
-                                ->withTitle('Close ' . $event->name)
-                                ->withButton(Button::danger('Close Event')->setSize('btn-xs'))
-                                ->withBody(view('modals.events_close_event')->with('event', $event)->render());
-                        ?>
-                    </td>
-                @endif
             </tr>
         <?php endforeach; ?>
         </tbody>

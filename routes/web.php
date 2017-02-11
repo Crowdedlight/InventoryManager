@@ -41,6 +41,7 @@ Route::group(['middleware' => ['web', 'auth']], function () {
     Route::post('/event/{id}/storage/stock', ['uses' => 'StorageController@StockStorage', 'as' => 'storages.stock_storage']);
     Route::post('/event/{id}/storage/move', ['uses' => 'StorageController@MoveProduct', 'as' => 'storages.move_product']);
     Route::post('/event/{id}/storage/updatesales', ['uses' => 'StorageController@UpdateSales', 'as' => 'storages.update_sales']);
+    Route::post('/event/{id}/storage/importsales', ['uses' => 'StorageController@ImportSales', 'as' => 'storages.import_sales']);
 
     Route::get('/auth/logout', ['uses' => 'AuthController@logout', 'as' => 'auth.logout']);
 });

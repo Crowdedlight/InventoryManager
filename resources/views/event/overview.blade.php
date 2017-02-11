@@ -3,9 +3,13 @@
 @section('content')
     <?php $storages = $event->storages()->orderBy('depot', 'DESC')->with('products')->get(); $user = Auth::user(); ?>
 
-    @if($errors->all() != null || count($errors->all()) > 0)
-        <div class="alert-danger alert">
-            <strong>Error! </strong> Error occured, please check modal
+    @if(count($errors->all()) > 0)
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
         </div>
     @endif
 
@@ -22,7 +26,7 @@
     @endif
 
     <div class="row">
-        <div class="col-md-9 min-height">
+        <div class="col-md-10 min-height">
             <div class="panel panel-default">
                 <div class="panel-heading">Overview</div>
                 <table class="table table-striped">
@@ -63,7 +67,7 @@
             </div>
         </div>
         @if($user->event()->active)
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div class="jumbotron">
                     <?php echo Modal::named('stockStorage')
                             ->withTitle('Stock Storage')
@@ -75,7 +79,7 @@
                 </div>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div class="jumbotron">
                     <?php echo Modal::named('moveProduct')
                             ->withTitle('Move Product')
@@ -87,17 +91,31 @@
                 </div>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div class="jumbotron">
-                    <?php echo Modal::named('updateSales')
-                            ->withTitle('Update Sales')
-                            ->withButton(Button::info('Update Sales')->block())
-                            ->withBody(view('modals.event_update_sales')
+                    <?php echo Modal::named('importSales')
+                            ->withTitle('Import Sales')
+                            ->withButton(Button::info('Import Sales')->block())
+                            ->withBody(view('modals.event_import_sales')
                                     ->with('event', Auth::user()->Event())
                                     ->render())
                     ?>
                 </div>
             </div>
+
+            @if($user->admin)
+                <div class="col-md-2">
+                    <div class="jumbotron">
+                        <?php echo Modal::named('updateSales')
+                                ->withTitle('Update Sales')
+                                ->withButton(Button::info('Update Sales')->block())
+                                ->withBody(view('modals.event_update_sales')
+                                        ->with('event', Auth::user()->Event())
+                                        ->render())
+                        ?>
+                    </div>
+                </div>
+            @endif
         @endif
     </div>
 @endsection

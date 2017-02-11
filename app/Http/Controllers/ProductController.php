@@ -81,6 +81,9 @@ class ProductController extends Controller
                 $storage->products()->attach($prod->id, ['modifiedBy' => $user->name]);
             }
         }
+
+        $request->session()->flash('success', 'success');
+
         return redirect()->route('event.products');
     }
 
