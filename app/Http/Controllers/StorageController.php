@@ -186,7 +186,7 @@ class StorageController extends Controller
             //todo Do we want this check? Or do we just want it to go in minus?
             if ($product->pivot->amount < $deltaAmount)
             {
-                array_push($errors, $prodName . " : Couldn't get updated as there is sold more than the current stock");
+                array_push($errors, $prodName . " : Couldn't update as there is seemingly sold more than current stock");
                 continue;
             }
 
