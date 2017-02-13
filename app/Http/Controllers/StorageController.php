@@ -183,12 +183,12 @@ class StorageController extends Controller
             $currSoldAmount = $product->pivot->sold_amount;
             $deltaAmount = ($newSoldAmount - $currSoldAmount);
 
-            //todo Do we want this check? Or do we just want it to go in minus?
-            if ($product->pivot->amount < $deltaAmount)
+            //todo Do we want this check? Or do we just want it to go in minus?. Do not want it currently. Goes in minus if issue appears
+            /*if ($product->pivot->amount < $deltaAmount)
             {
                 array_push($errors, $prodName . " : Couldn't update as there is seemingly sold more than current stock");
                 continue;
-            }
+            }*/
 
             $product->pivot->amount -= $deltaAmount;
             $product->pivot->sold_amount += $deltaAmount;
