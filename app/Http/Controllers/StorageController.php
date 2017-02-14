@@ -27,11 +27,12 @@ class StorageController extends Controller
 
     public function add(Request $request, $eventID)
     {
-        $products = Auth::user()->Event()->products()->get();
+        $user = Auth::user();
+        $products = $user->Event()->products()->get();
 
         $storage = new Storage();
         $storage->name = $request->input('name');
-        $storage->createdBy = Auth::user()->name;
+        $storage->createdBy = $user->name;
         $storage->FK_eventID = $eventID;
 
         if($request->input('depot') != null)
@@ -41,7 +42,7 @@ class StorageController extends Controller
 
         foreach ($products as $product)
         {
-            $product->storages()->attach($storage->id, ['modifiedBy' => Auth::user()->name]);
+            $product->storages()->attach($storage->id, ['modifiedBy' => $user->name]);
         }
 
         return redirect()->route('event.storages');
@@ -120,6 +121,8 @@ class StorageController extends Controller
         $start = false;
         $errors = array();
 
+        $updateArray = array();
+
         //products loop
         foreach ($data as $prod)
         {
@@ -179,10 +182,24 @@ class StorageController extends Controller
                 array_push($errors, $prodName . " : gave error and it sales did not get updated");
                 continue;
             }
-            $newSoldAmount = $modifier * $prodAmount;
-            $currSoldAmount = $product->pivot->sold_amount;
-            $deltaAmount = ($newSoldAmount - $currSoldAmount);
 
+            $newSoldAmount = $modifier * $prodAmount;
+            //push to array with id as key
+            if (array_key_exists($product->id, $updateArray))
+            {
+                $updateArray[$product->id] += $newSoldAmount;
+            }
+            else
+                $updateArray[$product->id] = $newSoldAmount;
+        }
+
+        //go though array and actually update the database values
+        foreach($updateArray as $key => $value)
+        {
+            $product = $storage->products->where('id', $key)->first();
+
+            $currSoldAmount = $product->pivot->sold_amount;
+            $deltaAmount = ($value - $currSoldAmount);
             //todo Do we want this check? Or do we just want it to go in minus?. Do not want it currently. Goes in minus if issue appears
             /*if ($product->pivot->amount < $deltaAmount)
             {
@@ -192,11 +209,10 @@ class StorageController extends Controller
 
             $product->pivot->amount -= $deltaAmount;
             $product->pivot->sold_amount += $deltaAmount;
-            //$product->pivot->save(); todo uncomment for testing when errors are fixed
-
+            $product->pivot->save();
         }
+
         //catch errors and add them to error list
-        dd($errors);
         if (count($errors) > 0)
             $request->session()->flash('error', $errors);
         else
@@ -214,15 +230,15 @@ class StorageController extends Controller
 
         $keys = array_keys($stockUpProds);
 
-        for($i = 0; $i < count($stockUpProds); $i++)
+        foreach($stockUpProds as $key => $value)
         {
             //skip if not entered a value
-            if ($stockUpProds[$keys[$i]] == null)
+            if ($value == null)
                 continue;
 
-            $product = $storage->products->where('id', $keys[$i])->first();
-            $product->pivot->amount -= $stockUpProds[$keys[$i]];
-            $product->pivot->sold_amount += $stockUpProds[$keys[$i]];
+            $product = $storage->products->where('id', $key)->first();
+            $product->pivot->amount -= $value;
+            $product->pivot->sold_amount += $value;
             $product->pivot->save();
         }
 

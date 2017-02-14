@@ -14,7 +14,7 @@ class Product extends Model
 
     public function storages()
     {
-        return $this->belongsToMany('App\Models\Product', 'products_storages', 'FK_productID', 'FK_storageID')
+        return $this->belongsToMany('App\Models\Storage', 'products_storages', 'FK_productID', 'FK_storageID')
             ->withPivot('amount', 'sold_amount', 'modifiedBy')
             ->withTimestamps();
     }

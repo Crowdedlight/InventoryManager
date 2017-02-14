@@ -23,12 +23,11 @@ class ValidationServiceProvider extends ServiceProvider
                 return true;
 
             $allData = $validator->getData();
-            $storageToID = (int) $allData['storageFrom'];
+            $storageFromID = (int) $allData['storageFrom'];
 
             $productID = (int) explode('.',$attribute)[1];
-            $product = Product::where('id', $productID)->with('storages')->first();
-
-            if ($product->storages->where('id', $storageToID)->first()->pivot->amount < $value)
+            $product = Product::with('storages')->where('id', $productID)->first();
+            if ($product->storages->where('id', $storageFromID)->first()->pivot->amount < $value)
             {
                 //Error, trying to move more than there is in storage
                 return false;
