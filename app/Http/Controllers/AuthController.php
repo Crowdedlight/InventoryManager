@@ -60,6 +60,9 @@ class AuthController extends Controller
             //Attempt to login
             Auth::attempt($userdata, $remember);
 
+            if(!Auth::check())
+                abort(403, 'Unauthorized action.');
+
             //Validation correct
             return redirect()->route('home');
 
