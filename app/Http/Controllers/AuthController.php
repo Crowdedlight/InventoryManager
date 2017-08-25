@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Socialite;
 
 
 class AuthController extends Controller
@@ -67,6 +68,17 @@ class AuthController extends Controller
             return redirect()->route('home');
 
         }
+    }
+
+    /**
+     * Redirect the user to the IZettle authentication page.
+     *
+     * @return Response
+     */
+    public function AuthIzettle()
+    {
+        $user = Socialite::driver('izettle')->stateless()->user();
+        dd($user);
     }
 
     public function logout(Request $request)

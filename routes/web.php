@@ -44,6 +44,8 @@ Route::group(['middleware' => ['web', 'auth']], function () {
     Route::post('/event/{id}/storage/importsales', ['uses' => 'StorageController@ImportSales', 'as' => 'storages.import_sales']);
 
     Route::get('/auth/logout', ['uses' => 'AuthController@logout', 'as' => 'auth.logout']);
+
+    Route::get('izettle/auth', ['uses' => 'AuthController@AuthIzettle', 'as' => 'auth.izettleAuth']);
 });
 
 Route::group(['middleware' => ['web', 'admin']], function () {

@@ -191,6 +191,11 @@ return [
 
         //Excel provider
         Maatwebsite\Excel\ExcelServiceProvider::class,
+
+        //API Socialite provider
+        SocialiteProviders\Generators\GeneratorsServiceProvider::class,
+        Laravel\Socialite\SocialiteServiceProvider::class,
+        crowdedlight\Socialite\IZettle\IZettleServiceProvider::class,
     ],
 
     /*
@@ -269,6 +274,7 @@ return [
         'BootForm' => AdamWathan\BootForms\Facades\BootForm::class,
         'DebugBar' => Barryvdh\Debugbar\Facade::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
     ],
 
 ];
