@@ -21,6 +21,7 @@ class CreateStoragesTable extends Migration
             $table->integer('FK_eventID')->unsigned();
             $table->timestamps();
             $table->softDeletes();
+            $table->index('name');
         });
 
         Schema::table('storages', function ($table) {

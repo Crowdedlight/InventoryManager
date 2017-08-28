@@ -46,6 +46,11 @@ Route::group(['middleware' => ['web', 'auth']], function () {
     Route::get('/auth/logout', ['uses' => 'AuthController@logout', 'as' => 'auth.logout']);
 
     Route::get('izettle/auth', ['uses' => 'AuthController@AuthIzettle', 'as' => 'auth.izettleAuth']);
+
+    Route::get('izettle/getproducts', ['uses' => 'IZettleController@GetProducts', 'as' => 'izettle.getproducts']);
+
+    Route::get('izettle/getsales', ['uses' => 'IZettleController@getLatestSales', 'as' => 'debug.retriveSales']);
+
 });
 
 Route::group(['middleware' => ['web', 'admin']], function () {

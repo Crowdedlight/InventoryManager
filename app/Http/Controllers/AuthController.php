@@ -78,7 +78,7 @@ class AuthController extends Controller
     public function AuthIzettle()
     {
         $user = Socialite::driver('izettle')->stateless()->user();
-        dd($user);
+        //dd($user);
     }
 
     public function logout(Request $request)

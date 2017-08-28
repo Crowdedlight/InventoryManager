@@ -19,6 +19,8 @@ class CreateEventsTable extends Migration
             $table->string('createdBy');
             $table->date('date');
             $table->boolean('active')->default(true);
+            $table->string('lastSaleHash');
+            $table->boolean('activeAPI')->default(false);
             $table->timestamps();
         });
     }
