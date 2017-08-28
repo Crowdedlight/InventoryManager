@@ -2,6 +2,8 @@
 
 namespace App\Console;
 
+use App\Models\Event;
+use App\Http\Controllers\IZettleController;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -24,8 +26,19 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        //update sales every minute
+        $schedule->call(function () {
+            $events = Event::where('activeAPI')->get();
+
+            //get all events with active api. Practically there is only one
+            foreach($events as $event) {
+                //call update api function
+                $this->call('App\Http\Controllers\IZettleController@getLatestSales', ['event' => $event]);
+            }
+        })
+            ->everyMinute()
+            ->withoutOverlapping()
+            ->appendOutputTo(storage_path("/logs/scheduler.log"));
     }
 
     /**
