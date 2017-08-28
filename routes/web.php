@@ -47,8 +47,6 @@ Route::group(['middleware' => ['web', 'auth']], function () {
 
     Route::get('izettle/auth', ['uses' => 'AuthController@AuthIzettle', 'as' => 'auth.izettleAuth']);
 
-    Route::get('izettle/getproducts', ['uses' => 'IZettleController@GetProducts', 'as' => 'izettle.getproducts']);
-
     Route::get('izettle/getsales', ['uses' => 'IZettleController@getLatestSales', 'as' => 'debug.retriveSales']);
 
 });
@@ -61,4 +59,8 @@ Route::group(['middleware' => ['web', 'admin']], function () {
     Route::post('/admin/user/demote/{id}',  ['uses' => 'AdminController@demoteUser', 'as'   => 'admin.demote_user']);
     Route::post('/admin/user/add',          ['uses' => 'AdminController@AddUser', 'as'      => 'admin.add_user']);
     Route::post('/admin/user/delete/{id}',  ['uses' => 'AdminController@DeleteUser', 'as'   => 'admin.delete_user']);
+
+    Route::post('izettle/getproducts',              ['uses' => 'IZettleController@GetProducts',     'as' => 'izettle.getproducts']);
+    Route::post('izettle/activateAPI/{eventID}',     ['uses' => 'IZettleController@activateAPI',     'as' => 'izettle.activateAPI']);
+    Route::post('izettle/deactivateAPI/{eventID}',   ['uses' => 'IZettleController@deactivateAPI',   'as' => 'izettle.deactivateAPI']);
 });

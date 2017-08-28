@@ -25,7 +25,6 @@ class ImportProductsRequest extends FormRequest
     public function rules()
     {
         return [
-            'import_file' => 'required|file|max:5000'
         ];
     }
 }

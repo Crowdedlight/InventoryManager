@@ -91,19 +91,30 @@
                 </div>
             </div>
 
-            <div class="col-md-2">
-                <div class="jumbotron">
-                    <?php echo Modal::named('importSales')
-                            ->withTitle('Import Sales')
-                            ->withButton(Button::info('Import Sales')->block())
-                            ->withBody(view('modals.event_import_sales')
-                                    ->with('event', Auth::user()->Event())
-                                    ->render())
-                    ?>
-                </div>
-            </div>
-
             @if($user->admin)
+                @if($user->Event()->activeAPI)
+                    <div class="col-md-2">
+                        <div class="jumbotron">
+                            <?php
+                            echo BootForm::open()->post()->action(route('izettle.deactivateAPI', $user->Event()->eventID));
+                            echo BootForm::hidden('_action')->value('deactivate_api');
+                            echo Button::submit()->danger()->withValue('Deactivate Sales API');
+                            echo BootForm::close();
+                            ?>
+                        </div>
+                    </div>
+                @else
+                    <div class="col-md-2">
+                        <div class="jumbotron">
+                            <?php
+                            echo BootForm::open()->post()->action(route('izettle.activateAPI', $user->Event()->eventID));
+                            echo BootForm::hidden('_action')->value('activate_api');
+                            echo Button::submit()->danger()->withValue('Activate Sales API');
+                            echo BootForm::close();
+                            ?>
+                        </div>
+                    </div>
+                @endif
                 <div class="col-md-2">
                     <div class="jumbotron">
                         <?php echo Modal::named('updateSales')
@@ -119,3 +130,15 @@
         @endif
     </div>
 @endsection
+
+@push('javascript')
+<script>
+
+    $(document).ready(function () {
+
+
+    });
+
+
+</script>
+@endpush

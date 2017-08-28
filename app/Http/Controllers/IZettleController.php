@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ImportProductsRequest;
 use App\Models\Event;
 use App\Models\Product;
 use App\Models\User;
@@ -18,11 +19,6 @@ class IZettleController extends Controller
     public function activateAPI() {
         //get event from current logged in user
         $user = Auth::user();
-
-        //only admins can change this
-        if(!$user->admin) {
-            abort(403, 'Unauthorized action.');
-        }
 
         $event = $user->Event();
 
@@ -46,6 +42,8 @@ class IZettleController extends Controller
         //set true in event for api
         $event->activeAPI = true;
         $event->save();
+
+        return redirect()->route('event.overview');
     }
 
     //Get latest products function -> update storage based on sales in database. Broadcast changes to frontend though redis
@@ -166,30 +164,20 @@ class IZettleController extends Controller
         //get event from current logged in user
         $user = Auth::user();
 
-        //only admins can change this
-        if(!$user->admin) {
-            abort(403, 'Unauthorized action.');
-        }
-
         $event = $user->Event();
 
         $event->activeAPI = false;
         $event->save();
+
+        return redirect()->route('event.overview');
     }
 
-    public function GetProducts() {
-        //get event from current logged in user
+    public function GetProducts($eventID) {
+
+        $event = Event::find($eventID)->get();
         $user = Auth::user();
 
-        //only admins can change this
-        if(!$user->admin) {
-            abort(403, 'Unauthorized action.');
-        }
-
-        $event = $user->Event();
-
         //Call API and get all products
-        //do call and get latest salehash
         $IZuser = Socialite::driver('izettle')->stateless()->user();
 
         // Send an request.

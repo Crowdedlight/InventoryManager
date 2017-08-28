@@ -49,7 +49,7 @@
             <div class="col-md-3">
                 <div class="jumbotron">
                     <?php echo Modal::named('importProduct')
-                            ->withTitle('Import Product')
+                            ->withTitle('Import Products from Izettle')
                             ->withButton(Button::info('Import Products')->block())
                             ->withBody(view('modals.products_import_product')
                                     ->with('eventID', $user->Event()->id)
