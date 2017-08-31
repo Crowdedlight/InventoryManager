@@ -37,8 +37,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
 <script src="{{ URL::asset('js/script.js') }}"></script>
+<script src="{{ mix('/js/app.js') }}"></script>
 
-@stack('javascript')
+@stack('js')
 
 </body>
 </html>

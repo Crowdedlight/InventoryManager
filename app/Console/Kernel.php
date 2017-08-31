@@ -37,8 +37,9 @@ class Kernel extends ConsoleKernel
             }
         })
             ->everyMinute()
+            ->name('SalesUpdater')
             ->withoutOverlapping()
-            ->appendOutputTo(storage_path("/logs/scheduler.log"));
+            ->appendOutputTo(storage_path("/logs/SalesUpdater.log"));
     }
 
     /**

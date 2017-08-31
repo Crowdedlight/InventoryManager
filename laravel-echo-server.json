@@ -1,0 +1,27 @@
+{
+	"authHost": "inv.localhost:8080",
+	"authEndpoint": "/broadcasting/auth",
+	"clients": [
+		{
+			"appId": "inventorymananger",
+			"key": "99ae389c9dd0300c56c79a653fcb073b"
+		}
+	],
+	"database": "redis",
+	"databaseConfig": {
+		"redis": {
+			"port": "6379",
+			"host": "crow.ovh"
+		},
+		"sqlite": {}
+	},
+	"devMode": true,
+	"host": null,
+	"port": "6001",
+	"protocol": "http",
+	"socketio": {},
+	"sslCertPath": "",
+	"sslKeyPath": "",
+	"sslCertChainPath": "",
+	"sslPassphrase": ""
+}

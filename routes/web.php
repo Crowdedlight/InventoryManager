@@ -48,6 +48,7 @@ Route::group(['middleware' => ['web', 'auth']], function () {
     Route::get('izettle/auth', ['uses' => 'AuthController@AuthIzettle', 'as' => 'auth.izettleAuth']);
 
     Route::get('izettle/getsales', ['uses' => 'IZettleController@getLatestSales', 'as' => 'debug.retriveSales']);
+    Route::get('izettle/testbroadcast', ['uses' => 'IZettleController@testBroadcast', 'as' => 'debug.testBroadcast']);
 
 });
 

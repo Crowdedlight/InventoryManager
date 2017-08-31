@@ -11,6 +11,10 @@
 |
 */
 
-Broadcast::channel('App.User.{id}', function ($user, $id) {
-    return (int) $user->id === (int) $id;
+Broadcast::channel('update.sales.{eventID}', function ($user, $eventID) {
+    return (int) $user->FK_eventID === (int) $eventID;
+});
+
+Broadcast::channel('update.error.{eventID}', function ($user, $eventID) {
+    return (int) $user->FK_eventID === (int) $eventID;
 });

@@ -131,14 +131,14 @@
     </div>
 @endsection
 
-@push('javascript')
+@push('js')
+<script src="{{ mix('js/app.js') }}"></script>
 <script>
 
-    $(document).ready(function () {
-
-
+    window.Echo.private('update.sales.{{$user->event()->id}}')
+            .listen('SalesUpdated', (e) => {
+                console.log(e);
     });
-
 
 </script>
 @endpush

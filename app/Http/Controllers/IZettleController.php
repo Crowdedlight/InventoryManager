@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\Errors;
+use App\Events\SalesUpdated;
 use App\Http\Requests\ImportProductsRequest;
 use App\Models\Event;
 use App\Models\Product;
@@ -144,18 +146,40 @@ class IZettleController extends Controller
         $event->save();
 
         //broadcast update array to frontend
-        //TODO
+        $broadcastObject = (object)[
+            'eventID' => $event->id,
+            'updateArray' => $updateArray
+        ];
+
+        dd($broadcastObject); //TODO
+        event(new SalesUpdated($broadcastObject));
+
+        //if errors exists broadcast them to frontend too
+        if (count($errors) > 0) {
+            //Wrap error
+            $errorBroadcast = (object)[
+                'eventID' => $event->id,
+                'errorArray' => $errors
+            ];
+            event(new Errors($errorBroadcast));
+        }
 
         //if size is equal to limit call next portion from api straight away
         if (count($sales->purchases) >= 100) {
             $this->getLatestSales($event);
         }
+    }
 
-        //if errors exists broadcast them to frontend too TODO
-        if (count($errors) > 0)
-            $broad = 0;
-        else
-            $broad = 0;
+    //TODO REMOVE
+    public function testBroadcast() {
+        $eventID = Auth::user()->Event()->id;
+        //broadcast update array to frontend
+        $broadcastObject = (object)[
+            'eventID' => $eventID,
+            'updateArray' => ['something' => 'something2']
+        ];
+
+        event(new SalesUpdated($broadcastObject));
 
     }
 
