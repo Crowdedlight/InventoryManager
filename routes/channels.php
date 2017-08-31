@@ -11,8 +11,9 @@
 |
 */
 
-Broadcast::channel('update.sales.{eventID}', function ($user, $eventID) {
-    return (int) $user->FK_eventID === (int) $eventID;
+Broadcast::channel('private-update.sales.{eventID}', function ($user, $eventID) {
+    return true;
+    //return (int) $user->FK_eventID === (int) $eventID;
 });
 
 Broadcast::channel('update.error.{eventID}', function ($user, $eventID) {

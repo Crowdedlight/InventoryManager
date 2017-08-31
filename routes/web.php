@@ -52,7 +52,7 @@ Route::group(['middleware' => ['web', 'auth']], function () {
 
 });
 
-Route::group(['middleware' => ['web', 'admin']], function () {
+Route::group(['middleware' => ['web', 'auth', 'admin']], function () {
     Route::get('/admin',                    ['uses' => 'AdminController@index', 'as'        => 'admin.index']);
     Route::post('/admin/api/users',         ['uses' => 'AdminController@ajaxUsers', 'as'    => 'admin.api_users']);
     Route::get('/admin/user/info/{id}',     ['uses' => 'AdminController@userInfo', 'as'     => 'admin.user_info']);
