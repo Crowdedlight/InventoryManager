@@ -92,29 +92,6 @@
             </div>
 
             @if($user->admin)
-                @if($user->Event()->activeAPI)
-                    <div class="col-md-2">
-                        <div class="jumbotron">
-                            <?php
-                            echo BootForm::open()->post()->action(route('izettle.deactivateAPI', $user->Event()->eventID));
-                            echo BootForm::hidden('_action')->value('deactivate_api');
-                            echo Button::submit()->danger()->withValue('Deactivate Sales API');
-                            echo BootForm::close();
-                            ?>
-                        </div>
-                    </div>
-                @else
-                    <div class="col-md-2">
-                        <div class="jumbotron">
-                            <?php
-                            echo BootForm::open()->post()->action(route('izettle.activateAPI', $user->Event()->eventID));
-                            echo BootForm::hidden('_action')->value('activate_api');
-                            echo Button::submit()->danger()->withValue('Activate Sales API');
-                            echo BootForm::close();
-                            ?>
-                        </div>
-                    </div>
-                @endif
                 <div class="col-md-2">
                     <div class="jumbotron">
                         <?php echo Modal::named('updateSales')
@@ -138,6 +115,11 @@
     window.Echo.private('update.sales.{{$user->event()->id}}')
             .listen('SalesUpdated', (e) => {
                 console.log(e);
+    });
+
+    window.Echo.private('update.error.{{$user->event()->id}}')
+            .listen('SalesUpdated', (e) => {
+        console.log(e);
     });
 
 </script>

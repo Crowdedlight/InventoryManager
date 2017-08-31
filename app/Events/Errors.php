@@ -33,6 +33,6 @@ class Errors implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('update.sales.error.' . $this->errorObject->eventID);
+        return new PrivateChannel('update.error.' . $this->errorObject->eventID);
     }
 }

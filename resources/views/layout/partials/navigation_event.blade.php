@@ -32,15 +32,27 @@
             @endif
 
             @if(Auth::check())
-            <p class="navbar-text navbar-right">
-                Signed in as <strong> {{ Auth::user()->name }} </strong>
-                (<a href="{{ route('auth.logout') }}" class="navbar-link">Logout</a>)
-            </p>
+                <p class="navbar-text navbar-right">
+                    Signed in as <strong> {{ Auth::user()->name }} </strong>
+                    (<a href="{{ route('auth.logout') }}" class="navbar-link">Logout</a>)
+                </p>
 
-            <p class="navbar-text navbar-right">
-                Current Event <strong> {{ Auth::user()->Event()->name }} </strong>
-                (<a href="{{ route('event.logout') }}" class="navbar-link">Logout</a>)
-            </p>
+                <p class="navbar-text navbar-right">
+                    Current Event <strong> {{ Auth::user()->Event()->name }} </strong>
+                    (<a href="{{ route('event.logout') }}" class="navbar-link">Logout</a>)
+                </p>
+            @endif
+
+            @if(Auth::check() && Auth::user()->admin && Auth::user()->Event()->activeAPI)
+                <p class="navbar-text navbar-right">
+                    API Status <strong class="api-on">API Turned On</strong>
+                    (<a href="{{ route('izettle.deactivateAPI', $user->Event()->eventID) }}" class="navbar-link">Turn API Off</a>)
+                </p>
+            @else
+                <p class="navbar-text navbar-right">
+                    API Status <strong class="api-off">API Turned Off</strong>
+                    (<a href="{{ route('izettle.activateAPI', $user->Event()->eventID) }}" class="navbar-link">Turn API On</a>)
+                </p>
             @endif
         </div>
     </div>

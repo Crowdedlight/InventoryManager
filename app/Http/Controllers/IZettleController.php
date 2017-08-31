@@ -198,7 +198,7 @@ class IZettleController extends Controller
 
     public function GetProducts($eventID) {
 
-        $event = Event::find($eventID)->get();
+        $event = Event::find($eventID);
         $user = Auth::user();
 
         //Call API and get all products

@@ -18,9 +18,6 @@ class Event extends Model
      *
      * @var array
      */
-    protected $fillable = [
-        'name', 'FK_eventID',
-    ];
 
     public function storages()
     {

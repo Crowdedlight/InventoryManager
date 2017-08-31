@@ -12,6 +12,12 @@
 */
 
 Broadcast::channel('update.sales.{eventID}', function ($user, $eventID) {
+    return (int) $user->FK_eventID === (int) $eventID;
+});
+
+Broadcast::channel('test', function ($user) {
+    Log::debug($user);
+    Log::debug($_REQUEST);
     return true;
     //return (int) $user->FK_eventID === (int) $eventID;
 });

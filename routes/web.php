@@ -61,7 +61,7 @@ Route::group(['middleware' => ['web', 'auth', 'admin']], function () {
     Route::post('/admin/user/add',          ['uses' => 'AdminController@AddUser', 'as'      => 'admin.add_user']);
     Route::post('/admin/user/delete/{id}',  ['uses' => 'AdminController@DeleteUser', 'as'   => 'admin.delete_user']);
 
-    Route::post('izettle/getproducts',              ['uses' => 'IZettleController@GetProducts',     'as' => 'izettle.getproducts']);
-    Route::post('izettle/activateAPI/{eventID}',     ['uses' => 'IZettleController@activateAPI',     'as' => 'izettle.activateAPI']);
-    Route::post('izettle/deactivateAPI/{eventID}',   ['uses' => 'IZettleController@deactivateAPI',   'as' => 'izettle.deactivateAPI']);
+    Route::post('izettle/getproducts/{eventID}',    ['uses' => 'IZettleController@GetProducts',     'as' => 'izettle.getproducts']);
+    Route::get('izettle/activateAPI/{eventID}',     ['uses' => 'IZettleController@activateAPI',     'as' => 'izettle.activateAPI']);
+    Route::get('izettle/deactivateAPI/{eventID}',   ['uses' => 'IZettleController@deactivateAPI',   'as' => 'izettle.deactivateAPI']);
 });

@@ -19,6 +19,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Product extends Model
 {
 
+    protected $fillable = [
+        'name', 'FK_eventID',
+    ];
+
     use SoftDeletes;
 
     protected $dates = ['deleted_at'];
