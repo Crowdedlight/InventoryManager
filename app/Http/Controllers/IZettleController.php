@@ -121,11 +121,15 @@ class IZettleController extends Controller
                 //push to array with id as key
                 if (array_key_exists($storedProduct->id, $updateArray))
                 {
-                    $updateArray[$storedProduct->id] += $soldAmount;
+                    $updateArray[$storedProduct->id]->soldAmount += $soldAmount;
                 }
-                else
-                    $updateArray[$storedProduct->id] = $soldAmount;
-
+                else {
+                    $obj = [
+                        'storageID' => $storedProduct->storage()->id,
+                        'soldAmount'=> $soldAmount,
+                    ];
+                    $updateArray[$storedProduct->id] = $obj;
+                }
             }
         }
 
@@ -174,9 +178,23 @@ class IZettleController extends Controller
     public function testBroadcast() {
         $eventID = Auth::user()->Event()->id;
         //broadcast update array to frontend
+
+        $updateA = array();
+        $obj = [
+            'storageID' => 1,
+            'soldAmount'=> 10,
+        ];
+        $obj2 = [
+            'storageID' => 3,
+            'soldAmount'=> 5,
+        ];
+        $updateA[1] = $obj;
+        $updateA[2] = $obj2;
+
+
         $broadcastObject = (object)[
             'eventID' => $eventID,
-            'updateArray' => ['something' => 'something2']
+            'updateArray' => $updateA
         ];
 
         event(new SalesUpdated($broadcastObject));

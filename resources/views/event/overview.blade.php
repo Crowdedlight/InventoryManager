@@ -46,16 +46,16 @@
                                 <?php $prod = $storage->products->where('id', $product->id)->first(); ?>
 
                                 @if($prod->pivot->amount < 5)
-                                    <td class="bg-danger">
+                                    <td class="bg-danger" data-productID="{{ $prod->id }}" data-storageID="{{ $storage->id }}">
                                 @elseif ($prod->pivot->amount >= 5 && $prod->pivot->amount < 30)
-                                    <td class="bg-warning">
+                                    <td class="bg-warning" data-productID="{{ $prod->id }}" data-storageID="{{ $storage->id }}">
                                 @else
-                                    <td class="bg-success">
+                                    <td class="bg-success" data-productID="{{ $prod->id }}" data-storageID="{{ $storage->id }}">
                                 @endif
                                     @if ($prod != null)
-                                        <strong>{{ $prod->pivot->amount }}</strong>
+                                        <strong class="amount">{{ $prod->pivot->amount }}</strong>
                                         @if (!$storage->depot)
-                                            <small class="pull-right">({{$prod->pivot->sold_amount}})</small>
+                                            <small class="pull-right sold-amount">({{$prod->pivot->sold_amount}})</small>
                                         @endif
                                     @endif
                                     </td>
@@ -112,13 +112,45 @@
 <script src="{{ mix('js/app.js') }}"></script>
 <script>
 
-    window.Echo.private('update.sales.{{$user->event()->id}}')
-            .listen('SalesUpdated', (e) => {
-                console.log(e);
+    var i = window.Echo.private('update.sales.{{$user->event()->id}}').listen('SalesUpdated', function(e) {
+        var list = e.update.updateArray;
+
+        for(var key in list) {
+            var obj = list[key];
+
+            //console.log("id: " + key + ", StorageID: " + obj.storageID + ", value: " + obj.soldAmount);
+
+            //get element to update
+            var td = $('td[data-storageID="' + obj.storageID + '"]' + '[data-productID="' + key + '"]');
+            var amount = td.children('.amount');
+            var sold_amount = td.children('.sold-amount');
+
+            //get current text
+            var currAmount = amount.text();
+            var currSoldAmount = parseInt(sold_amount.text().replace(/\(|\)/g, '')); //regEx to remove ( and ) from text
+            var updatedSoldAmount = currSoldAmount + obj.soldAmount;
+
+            //clear current text
+            amount.text(currAmount - obj.soldAmount);
+            sold_amount.text("");
+            sold_amount.text("(" + updatedSoldAmount + ")");
+
+            //make background flash to mark it has been updated. Fadeout after 10sec
+            td.removeClass().width();
+            td.addClass("UpdateNotify");
+
+            //set background based on currAmount
+            var newV = currAmount - obj.soldAmount;
+            if(newV <= 5)
+                td.addClass("bg-danger");
+            else if (newV <= 10)
+                td.addClass("bg-warning");
+            else
+                td.addClass("bg-success");
+        }
     });
 
-    window.Echo.private('update.error.{{$user->event()->id}}')
-            .listen('SalesUpdated', (e) => {
+    var ii = window.Echo.private('update.error.{{$user->event()->id}}').listen('SalesUpdated', function(e) {
         console.log(e);
     });
 
