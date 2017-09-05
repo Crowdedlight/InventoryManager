@@ -46,12 +46,12 @@
             @if(Auth::check() && Auth::user()->admin && Auth::user()->Event()->activeAPI)
                 <p class="navbar-text navbar-right">
                     API Status <strong class="api-on">API Turned On</strong>
-                    (<a href="{{ route('izettle.deactivateAPI', $user->Event()->eventID) }}" class="navbar-link">Turn API Off</a>)
+                    (<a href="{{ route('izettle.deactivateAPI') }}" class="navbar-link">Turn API Off</a>)
                 </p>
             @else
                 <p class="navbar-text navbar-right">
                     API Status <strong class="api-off">API Turned Off</strong>
-                    (<a href="{{ route('izettle.activateAPI', $user->Event()->eventID) }}" class="navbar-link">Turn API On</a>)
+                    (<a href="{{ route('izettle.activateAPI') }}" class="navbar-link">Turn API On</a>)
                 </p>
             @endif
         </div>

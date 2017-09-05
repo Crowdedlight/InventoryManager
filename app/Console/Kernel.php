@@ -6,6 +6,7 @@ use App\Models\Event;
 use App\Http\Controllers\IZettleController;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use App\Http\IZettleHelper;
 
 class Kernel extends ConsoleKernel
 {
@@ -28,12 +29,13 @@ class Kernel extends ConsoleKernel
     {
         //update sales every minute
         $schedule->call(function () {
-            $events = Event::where('activeAPI')->get();
+            $events = Event::where('activeAPI', true)->get();
 
             //get all events with active api. Practically there is only one
             foreach($events as $event) {
                 //call update api function
-                $this->call('App\Http\Controllers\IZettleController@getLatestSales', ['event' => $event]);
+                //$this->call('App\Http\IZettleHelper@getLatestSales', ['event' => $event]);
+                app(IZettleHelper::class)->getLatestSales($event);
             }
         })
             ->everyMinute()
