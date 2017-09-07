@@ -56,6 +56,11 @@ class IZettleHelper
 
         $errors = array();
         $updateArray = array();
+		
+		if (count($sales->purchases) <= 0) {
+			//nothing to update. Empty sales
+			return;
+		}
 
         //loop though sales and update database
         foreach($sales->purchases as $sale) {
