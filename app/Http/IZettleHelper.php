@@ -117,7 +117,7 @@ class IZettleHelper
         foreach($updateArray as $key => $item)
         {
             $product = $storage->products->where('id', $key)->first();
-            
+
             $product->pivot->amount -= $item->soldAmount;
             $product->pivot->sold_amount += $item->soldAmount;
             $product->pivot->save();

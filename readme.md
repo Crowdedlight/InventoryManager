@@ -26,7 +26,32 @@ npm install -G laravel-echo-server
 Configure ``laravel-echo-server.json`` with needed settings
 
 Make a supervisor configuration that always runs the laravel-echo-server.
-?Todo?
+```
+[program:echo-server]
+directory=/home/vagrant/path/to/your/project
+command=/usr/bin/laravel-echo-server start
+autostart=true
+autorestart=true
+user=vagrant
+redirect_stderr=true
+stdout_logfile=/home/vagrant/path/to/your/project/storage/logs/echoserver.log
+```
 
 ### Redis
 Configure Redis settings in ``.env``
+
+### npm for laravel-echo-server
+Run
+```npm install```
+for dependencies.
+
+Run
+```npm run production```
+(Or ``npm run dev`` for development)
+
+### Composer - Laravel
+```composer install```
+
+### Laravel
+```php artisan migrate```
+```php artisan db:seed```
